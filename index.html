@@ -1,294 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Italian Brainrot Clicker: Spaghetti Evolution</title>
+    <title>Итальянский Кликер: Паста и Безумие</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --red: #E63946;
-            --white: #F1FAEE;
-            --light-blue: #A8DADC;
-            --blue: #457B9D;
-            --dark-blue: #1D3557;
-            --yellow: #FFD166;
-            --green: #06D6A0;
-        }
-
-        * {
+        /* Основные стили */
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: #E63946 url('https://i.imgur.com/JQlE6rN.png') no-repeat center center;
+            background-size: cover;
+            color: #FFF;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-        }
-
-        body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background-color: var(--red);
-            color: var(--white);
+            text-align: center;
             overflow-x: hidden;
-            background-image: url('https://i.imgur.com/JQlE6rN.png');
-            background-size: cover;
-            background-attachment: fixed;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 1200px;
+        .game-container {
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 10;
+            background: rgba(29, 53, 87, 0.8);
+            border-radius: 20px;
+            border: 5px solid #FFD166;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
         }
 
         h1 {
-            font-size: 3.5rem;
-            color: var(--yellow);
-            text-shadow: 5px 5px 0 var(--dark-blue);
+            color: #FFD166;
+            text-shadow: 4px 4px 0 #1D3557;
+            font-size: 3rem;
             margin-bottom: 10px;
-            animation: titleBounce 2s infinite;
+            animation: bounce 2s infinite;
         }
 
-        @keyframes titleBounce {
+        @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        .tagline {
-            font-size: 1.5rem;
-            color: var(--white);
-            text-shadow: 2px 2px 0 var(--dark-blue);
-            margin-bottom: 20px;
-        }
-
-        .main-game {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-        }
-
-        .clicker-section {
-            flex: 1;
-            min-width: 300px;
-            background-color: rgba(29, 53, 87, 0.8);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            border: 5px solid var(--yellow);
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            background-color: rgba(168, 218, 220, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px dashed var(--light-blue);
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--yellow);
-            text-shadow: 2px 2px 0 var(--dark-blue);
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: var(--white);
-        }
-
+        /* Клик-зона */
         .click-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
+            margin: 30px 0;
             position: relative;
         }
 
         .click-button {
             width: 200px;
             height: 200px;
-            background-image: url('https://i.imgur.com/5XZJk7P.png');
+            background: url('https://i.imgur.com/5XZJk7P.png') no-repeat center;
             background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
             border: none;
             cursor: pointer;
-            transition: all 0.1s;
-            position: relative;
-            z-index: 5;
-            animation: spin 20s linear infinite;
-            filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.7));
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            transition: transform 0.1s;
+            filter: drop-shadow(0 0 15px rgba(255, 209, 102, 0.7));
         }
 
         .click-button:active {
-            transform: scale(0.95) rotate(5deg);
-            filter: drop-shadow(0 0 15px rgba(255, 209, 102, 0.9));
+            transform: scale(0.95);
+            filter: drop-shadow(0 0 20px rgba(255, 209, 102, 0.9));
         }
 
-        .click-effect {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.imgur.com/QZzLQ9a.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 4;
-        }
-
-        .click-multiplier {
-            font-size: 1.2rem;
-            color: var(--yellow);
-            margin-top: 10px;
-            text-shadow: 2px 2px 0 var(--dark-blue);
-        }
-
-        .upgrades-section {
-            flex: 2;
-            min-width: 300px;
-            background-color: rgba(29, 53, 87, 0.8);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border: 5px solid var(--green);
-        }
-
-        .tabs {
+        /* Статистика */
+        .stats {
             display: flex;
-            margin-bottom: 20px;
-            border-bottom: 3px solid var(--light-blue);
+            justify-content: space-around;
+            margin: 20px 0;
+            background: rgba(168, 218, 220, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px dashed #A8DADC;
         }
 
-        .tab {
-            padding: 10px 20px;
-            background-color: var(--blue);
-            color: var(--white);
-            cursor: pointer;
-            border-radius: 10px 10px 0 0;
-            margin-right: 5px;
-            transition: all 0.3s;
+        .stat {
+            font-size: 1.5rem;
+        }
+
+        .stat span {
+            color: #FFD166;
             font-weight: bold;
-            text-shadow: 1px 1px 0 var(--dark-blue);
         }
 
-        .tab.active {
-            background-color: var(--green);
-            color: var(--dark-blue);
-        }
-
-        .tab:hover {
-            background-color: var(--light-blue);
-        }
-
-        .upgrades-container {
+        /* Улучшения */
+        .upgrades {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
-            max-height: 500px;
-            overflow-y: auto;
-            padding-right: 10px;
+            margin-top: 30px;
         }
 
         .upgrade {
-            background-color: rgba(241, 250, 238, 0.1);
+            background: rgba(241, 250, 238, 0.1);
             border-radius: 10px;
             padding: 15px;
+            border: 2px solid #457B9D;
             transition: all 0.3s;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .upgrade::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .upgrade:hover::before {
-            transform: translateX(100%);
+        .upgrade-icon {
+            width: 64px;
+            height: 64px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-bottom: 10px;
         }
 
         .upgrade.available {
-            border-color: var(--green);
+            border-color: #06D6A0;
             cursor: pointer;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 rgba(6, 214, 160, 0); }
+            0%, 100% { box-shadow: 0 0 0 rgba(6, 214, 160, 0); }
             50% { box-shadow: 0 0 15px rgba(6, 214, 160, 0.5); }
-            100% { box-shadow: 0 0 0 rgba(6, 214, 160, 0); }
         }
 
         .upgrade.unlocked {
-            border-color: var(--yellow);
-            background-color: rgba(255, 209, 102, 0.1);
+            border-color: #FFD166;
+            background: rgba(255, 209, 102, 0.1);
         }
 
-        .upgrade.locked {
-            opacity: 0.6;
-            filter: grayscale(80%);
+        /* Враги */
+        .enemy {
+            margin-top: 30px;
+            background: rgba(230, 57, 70, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid #E63946;
         }
 
-        .upgrade-icon {
-            width: 50px;
-            height: 50px;
+        .enemy-image {
+            width: 120px;
+            height: 120px;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            margin-bottom: 10px;
+            margin: 0 auto 15px;
         }
 
-        .upgrade-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--yellow);
-            margin-bottom: 5px;
-            text-shadow: 1px 1px 0 var(--dark-blue);
+        .enemy-health {
+            height: 20px;
+            background: #1D3557;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
         }
 
-        .upgrade-desc {
-            font-size: 0.9rem;
-            color: var(--white);
-            margin-bottom: 10px;
-            min-height: 40px;
+        .enemy-health-bar {
+            height: 100%;
+            background: #06D6A0;
+            width: 100%;
+            transition: width 0.3s;
         }
 
-        .upgrade-cost {
-            font-size: 1rem;
-            color: var(--light-blue);
-            font-weight: bold;
-        }
-
+        /* Анимации */
         .particle {
             position: absolute;
             width: 30px;
@@ -296,1437 +170,364 @@
             background-size: contain;
             background-repeat: no-repeat;
             pointer-events: none;
+            animation: float 1s forwards;
+            z-index: 10;
+        }
+
+        @keyframes float {
+            to { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .critical {
+            position: absolute;
+            font-size: 2rem;
+            color: gold;
+            text-shadow: 0 0 5px red;
+            animation: crit 0.5s forwards;
+            pointer-events: none;
             z-index: 20;
         }
 
-        .critical-hit {
-            position: absolute;
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--yellow);
-            text-shadow: 3px 3px 0 var(--red);
-            animation: critAnim 1s;
-            pointer-events: none;
-            z-index: 30;
-        }
-
-        @keyframes critAnim {
-            0% { transform: scale(0.5); opacity: 0; }
+        @keyframes crit {
+            0% { transform: scale(0); opacity: 0; }
             50% { transform: scale(1.5); opacity: 1; }
             100% { transform: scale(1); opacity: 0; }
         }
 
-        .floating-text {
-            position: absolute;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--yellow);
-            text-shadow: 2px 2px 0 var(--dark-blue);
-            animation: floatUp 1s;
-            pointer-events: none;
-            z-index: 25;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-50px); opacity: 0; }
-        }
-
-        .enemy-section {
-            width: 100%;
-            margin-top: 30px;
-            background-color: rgba(29, 53, 87, 0.8);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border: 5px solid var(--red);
-        }
-
-        .enemy-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .enemy {
-            width: 150px;
-            height: 150px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            margin-bottom: 15px;
-            position: relative;
-            transition: all 0.2s;
-        }
-
-        .enemy-health {
-            width: 100%;
-            height: 10px;
-            background-color: var(--dark-blue);
-            border-radius: 5px;
-            margin-bottom: 10px;
-            overflow: hidden;
-        }
-
-        .enemy-health-bar {
-            height: 100%;
-            width: 100%;
-            background-color: var(--green);
-            transition: width 0.3s;
-        }
-
-        .enemy-name {
-            font-size: 1.5rem;
-            color: var(--white);
-            text-shadow: 2px 2px 0 var(--dark-blue);
-            margin-bottom: 5px;
-        }
-
-        .enemy-desc {
-            font-size: 1rem;
-            color: var(--light-blue);
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .enemy-rewards {
-            font-size: 1rem;
-            color: var(--yellow);
-            text-align: center;
-        }
-
-        .path-section {
-            width: 100%;
-            margin-top: 30px;
-            background-color: rgba(29, 53, 87, 0.8);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border: 5px solid var(--blue);
-        }
-
-        .paths {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .path {
-            flex: 1;
-            min-width: 250px;
-            background-color: rgba(241, 250, 238, 0.1);
-            border-radius: 15px;
-            padding: 15px;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: 3px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .path::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .path:hover::after {
-            transform: translateX(100%);
-        }
-
-        .path.active {
-            border-color: var(--yellow);
-            background-color: rgba(255, 209, 102, 0.1);
-        }
-
-        .path-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 10px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        .path-name {
-            font-size: 1.5rem;
-            color: var(--yellow);
-            text-align: center;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 0 var(--dark-blue);
-        }
-
-        .path-desc {
-            font-size: 1rem;
-            color: var(--white);
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .path-progress {
-            height: 10px;
-            background-color: var(--dark-blue);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .path-progress-bar {
-            height: 100%;
-            background-color: var(--green);
-            width: 0%;
-            transition: width 0.5s;
-        }
-
-        .path-unlocks {
-            font-size: 0.9rem;
-            color: var(--light-blue);
-            text-align: center;
-        }
-
-        .prestige-section {
-            width: 100%;
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .prestige-button {
-            padding: 15px 30px;
-            background: linear-gradient(45deg, var(--yellow), var(--green));
-            border: none;
-            border-radius: 50px;
-            color: var(--dark-blue);
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-        }
-
-        .prestige-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .prestige-button:hover::before {
-            transform: translateX(100%);
-        }
-
-        .prestige-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .prestige-button:disabled {
-            background: linear-gradient(45deg, #777, #999);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .prestige-rewards {
-            font-size: 1.2rem;
-            color: var(--yellow);
-            margin-top: 15px;
-            text-shadow: 1px 1px 0 var(--dark-blue);
-        }
-
-        /* Анимации для разных элементов */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        @keyframes glow {
-            0% { filter: drop-shadow(0 0 5px rgba(255, 209, 102, 0.7)); }
-            50% { filter: drop-shadow(0 0 15px rgba(255, 209, 102, 0.9)); }
-            100% { filter: drop-shadow(0 0 5px rgba(255, 209, 102, 0.7)); }
-        }
-
-        /* Медиазапросы для адаптивности */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .stats {
+                flex-direction: column;
+                gap: 10px;
             }
             
-            .tagline {
-                font-size: 1.2rem;
+            .upgrades {
+                grid-template-columns: 1fr;
             }
             
             .click-button {
                 width: 150px;
                 height: 150px;
             }
-            
-            .upgrades-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .paths {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Italian Brainrot Clicker</h1>
-            <p class="tagline">Spaghetti Evolution - From Pasta to Cosmic Glory!</p>
-        </header>
+    <div class="game-container">
+        <h1>Итальянский Кликер</h1>
+        <p>Паста и Безумие!</p>
 
-        <div class="main-game">
-            <div class="clicker-section">
-                <div class="stats">
-                    <div class="stat">
-                        <div class="stat-value" id="pasta-count">0</div>
-                        <div class="stat-label">Pasta Coins</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="pps-count">0</div>
-                        <div class="stat-label">Per Second</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="level-count">1</div>
-                        <div class="stat-label">Level</div>
-                    </div>
-                </div>
-
-                <div class="click-area">
-                    <div class="click-effect" id="click-effect"></div>
-                    <button class="click-button" id="click-button"></button>
-                    <div class="click-multiplier" id="click-multiplier">+1 per click</div>
-                </div>
-            </div>
-
-            <div class="upgrades-section">
-                <div class="tabs">
-                    <div class="tab active" data-tab="click">Click Upgrades</div>
-                    <div class="tab" data-tab="production">Production</div>
-                    <div class="tab" data-tab="special">Special</div>
-                </div>
-
-                <div class="upgrades-container" id="click-upgrades">
-                    <!-- Click upgrades will be added here by JavaScript -->
-                </div>
-
-                <div class="upgrades-container" id="production-upgrades" style="display: none;">
-                    <!-- Production upgrades will be added here by JavaScript -->
-                </div>
-
-                <div class="upgrades-container" id="special-upgrades" style="display: none;">
-                    <!-- Special upgrades will be added here by JavaScript -->
-                </div>
-            </div>
+        <div class="stats">
+            <div class="stat">Паста: <span id="pasta">0</span></div>
+            <div class="stat">В секунду: <span id="pps">0</span></div>
+            <div class="stat">Уровень: <span id="level">1</span></div>
         </div>
 
-        <div class="enemy-section">
-            <h2>Current Brainrot Enemy</h2>
-            <div class="enemy-container">
-                <div class="enemy" id="enemy-image"></div>
-                <div class="enemy-health">
-                    <div class="enemy-health-bar" id="enemy-health"></div>
-                </div>
-                <div class="enemy-name" id="enemy-name">Uncle Mario</div>
-                <div class="enemy-desc" id="enemy-desc">Throws pizza at you, slowing your progress!</div>
-                <div class="enemy-rewards" id="enemy-rewards">Reward: 100 Pasta Coins</div>
+        <div class="click-area">
+            <button class="click-button" id="click-button"></button>
+            <div id="click-effect"></div>
+        </div>
+
+        <div class="enemy">
+            <div class="enemy-image" id="enemy-image" style="background-image: url('https://i.imgur.com/5XZJk7P.png')"></div>
+            <h2 id="enemy-name">Дядя Марио</h2>
+            <p id="enemy-desc">Кидает в тебя пиццей!</p>
+            <div class="enemy-health">
+                <div class="enemy-health-bar" id="enemy-health"></div>
             </div>
+            <p>Награда: <span id="enemy-reward">100</span> пасты</p>
         </div>
 
-        <div class="path-section">
-            <h2>Evolution Paths</h2>
-            <div class="paths">
-                <div class="path" data-path="culinary">
-                    <div class="path-icon" style="background-image: url('https://i.imgur.com/8Km9t0e.png');"></div>
-                    <div class="path-name">Culinary Master</div>
-                    <div class="path-desc">Become the ultimate chef of the universe!</div>
-                    <div class="path-progress">
-                        <div class="path-progress-bar" id="culinary-progress"></div>
-                    </div>
-                    <div class="path-unlocks" id="culinary-unlocks">0/10 upgrades</div>
-                </div>
-
-                <div class="path" data-path="mafia">
-                    <div class="path-icon" style="background-image: url('https://i.imgur.com/vVOh0Xk.png');"></div>
-                    <div class="path-name">Mafia Boss</div>
-                    <div class="path-desc">Control the pasta underworld!</div>
-                    <div class="path-progress">
-                        <div class="path-progress-bar" id="mafia-progress"></div>
-                    </div>
-                    <div class="path-unlocks" id="mafia-unlocks">0/10 upgrades</div>
-                </div>
-
-                <div class="path" data-path="cosmic">
-                    <div class="path-icon" style="background-image: url('https://i.imgur.com/KYjQbWZ.png');"></div>
-                    <div class="path-name">Cosmic Pasta</div>
-                    <div class="path-desc">Spread spaghetti across the galaxy!</div>
-                    <div class="path-progress">
-                        <div class="path-progress-bar" id="cosmic-progress"></div>
-                    </div>
-                    <div class="path-unlocks" id="cosmic-unlocks">0/10 upgrades</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="prestige-section">
-            <button class="prestige-button" id="prestige-button" disabled>Prestige (Unlocks at level 50)</button>
-            <div class="prestige-rewards" id="prestige-rewards">Next Prestige: +0% bonus</div>
-        </div>
+        <h2>Улучшения</h2>
+        <div class="upgrades" id="upgrades"></div>
     </div>
 
-    <audio id="click-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3"></audio>
-    <audio id="critical-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
-    <audio id="upgrade-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3"></audio>
-    <audio id="enemy-hit-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-arrow-whoosh-1491.mp3"></audio>
-    <audio id="enemy-defeat-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-video-game-win-2016.mp3"></audio>
-    <audio id="prestige-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3"></audio>
-    <audio id="background-music" loop src="https://assets.mixkit.co/music/preview/mixkit-game-show-suspense-waiting-668.mp3"></audio>
-
     <script>
-        // Game State
+        // Игровые переменные
         const game = {
             pasta: 0,
-            pastaPerSecond: 0,
+            pps: 0,
             clickPower: 1,
             level: 1,
-            experience: 0,
-            experienceToNextLevel: 100,
-            criticalChance: 0,
-            criticalMultiplier: 2,
-            autoClickers: 0,
-            prestigeLevel: 0,
-            activePath: null,
-            pathProgress: {
-                culinary: 0,
-                mafia: 0,
-                cosmic: 0
+            critChance: 0,
+            upgrades: [
+                { 
+                    id: 1, 
+                    name: "Лучшая ложка", 
+                    desc: "+1 к клику", 
+                    cost: 50, 
+                    effect: { click: 1 }, 
+                    unlocked: false,
+                    icon: "https://i.imgur.com/3QJjQ9a.png"
+                },
+                { 
+                    id: 2, 
+                    name: "Автоповар", 
+                    desc: "+0.5 пасты/сек", 
+                    cost: 100, 
+                    effect: { pps: 0.5 }, 
+                    unlocked: false,
+                    icon: "https://i.imgur.com/Spaghetti.png"
+                },
+                { 
+                    id: 3, 
+                    name: "Секретный рецепт", 
+                    desc: "+5% шанс крита", 
+                    cost: 200, 
+                    effect: { crit: 5 }, 
+                    unlocked: false,
+                    icon: "https://i.imgur.com/8Km9t0e.png"
+                },
+                { 
+                    id: 4, 
+                    name: "Мафиозный наклон", 
+                    desc: "+2 к клику", 
+                    cost: 300, 
+                    effect: { click: 2 }, 
+                    unlocked: false,
+                    icon: "https://i.imgur.com/vVOh0Xk.png"
+                },
+                { 
+                    id: 5, 
+                    name: "Космическая паста", 
+                    desc: "+1.5 пасты/сек", 
+                    cost: 500, 
+                    effect: { pps: 1.5 }, 
+                    unlocked: false,
+                    icon: "https://i.imgur.com/KYjQbWZ.png"
+                }
+            ],
+            enemy: {
+                name: "Дядя Марио",
+                desc: "Кидает в тебя пиццей!",
+                health: 100,
+                maxHealth: 100,
+                reward: 100,
+                image: "https://i.imgur.com/5XZJk7P.png"
             },
-            unlockedUpgrades: [],
-            currentEnemy: null,
-            enemyHealth: 0,
-            maxEnemyHealth: 100,
-            enemyReward: 100,
-            lastClickTime: 0,
-            clickCombo: 0,
-            maxClickCombo: 0
-        };
-
-        // Game Elements
-        const clickButton = document.getElementById('click-button');
-        const clickEffect = document.getElementById('click-effect');
-        const pastaCount = document.getElementById('pasta-count');
-        const ppsCount = document.getElementById('pps-count');
-        const levelCount = document.getElementById('level-count');
-        const clickMultiplier = document.getElementById('click-multiplier');
-        const clickUpgradesContainer = document.getElementById('click-upgrades');
-        const productionUpgradesContainer = document.getElementById('production-upgrades');
-        const specialUpgradesContainer = document.getElementById('special-upgrades');
-        const enemyImage = document.getElementById('enemy-image');
-        const enemyHealthBar = document.getElementById('enemy-health');
-        const enemyName = document.getElementById('enemy-name');
-        const enemyDesc = document.getElementById('enemy-desc');
-        const enemyRewards = document.getElementById('enemy-rewards');
-        const prestigeButton = document.getElementById('prestige-button');
-        const prestigeRewards = document.getElementById('prestige-rewards');
-        const culinaryProgress = document.getElementById('culinary-progress');
-        const culinaryUnlocks = document.getElementById('culinary-unlocks');
-        const mafiaProgress = document.getElementById('mafia-progress');
-        const mafiaUnlocks = document.getElementById('mafia-unlocks');
-        const cosmicProgress = document.getElementById('cosmic-progress');
-        const cosmicUnlocks = document.getElementById('cosmic-unlocks');
-
-        // Audio Elements
-        const clickSound = document.getElementById('click-sound');
-        const criticalSound = document.getElementById('critical-sound');
-        const upgradeSound = document.getElementById('upgrade-sound');
-        const enemyHitSound = document.getElementById('enemy-hit-sound');
-        const enemyDefeatSound = document.getElementById('enemy-defeat-sound');
-        const prestigeSound = document.getElementById('prestige-sound');
-        const backgroundMusic = document.getElementById('background-music');
-
-        // Upgrades Data
-        const upgrades = {
-            click: [
-                {
-                    id: 'better_spoon',
-                    name: 'Better Spoon',
-                    description: 'A more efficient pasta spoon!',
-                    icon: 'https://i.imgur.com/3QJjQ9a.png',
-                    cost: 50,
-                    effect: { clickPower: 1 },
-                    path: 'culinary'
+            enemies: [
+                { 
+                    name: "Дядя Марио", 
+                    desc: "Кидает в тебя пиццей!", 
+                    health: 100, 
+                    reward: 100,
+                    image: "https://i.imgur.com/5XZJk7P.png"
                 },
-                {
-                    id: 'golden_fork',
-                    name: 'Golden Fork',
-                    description: 'This fork is worth its weight in pasta!',
-                    icon: 'https://i.imgur.com/5XZJk7P.png',
-                    cost: 200,
-                    effect: { clickPower: 2 },
-                    path: 'culinary'
+                { 
+                    name: "Мафиозо", 
+                    desc: "Предлагает 'крышу' за пасту", 
+                    health: 150, 
+                    reward: 200,
+                    image: "https://i.imgur.com/vVOh0Xk.png"
                 },
-                {
-                    id: 'nonna_recipe',
-                    name: "Nonna's Recipe",
-                    description: "Secret family recipe increases pasta quality!",
-                    icon: 'https://i.imgur.com/8Km9t0e.png',
-                    cost: 500,
-                    effect: { clickPower: 5, criticalChance: 0.05 },
-                    path: 'culinary'
+                { 
+                    name: "Критик-кулинар", 
+                    desc: "Оскорбляет твою пасту", 
+                    health: 200, 
+                    reward: 300,
+                    image: "https://i.imgur.com/QZzLQ9a.png"
                 },
-                {
-                    id: 'threatening_look',
-                    name: 'Threatening Look',
-                    description: "They'll give you pasta just to avoid trouble!",
-                    icon: 'https://i.imgur.com/vVOh0Xk.png',
-                    cost: 100,
-                    effect: { clickPower: 1.5 },
-                    path: 'mafia'
-                },
-                {
-                    id: 'offer_cant_refuse',
-                    name: 'Offer They Can\'t Refuse',
-                    description: 'Pasta or consequences!',
-                    icon: 'https://i.imgur.com/QZzLQ9a.png',
-                    cost: 400,
-                    effect: { clickPower: 3, criticalChance: 0.1 },
-                    path: 'mafia'
-                },
-                {
-                    id: 'cosmic_noodles',
-                    name: 'Cosmic Noodles',
-                    description: 'Pasta from beyond the stars!',
-                    icon: 'https://i.imgur.com/KYjQbWZ.png',
-                    cost: 150,
-                    effect: { clickPower: 2 },
-                    path: 'cosmic'
-                },
-                {
-                    id: 'black_hole_ravioli',
-                    name: 'Black Hole Ravioli',
-                    description: 'Pasta with infinite density!',
-                    icon: 'https://i.imgur.com/JQlE6rN.png',
-                    cost: 600,
-                    effect: { clickPower: 4, criticalMultiplier: 0.5 },
-                    path: 'cosmic'
-                }
-            ],
-            production: [
-                {
-                    id: 'pasta_machine',
-                    name: 'Pasta Machine',
-                    description: 'Automatically produces pasta!',
-                    icon: 'https://i.imgur.com/Spaghetti.png',
-                    cost: 100,
-                    effect: { pastaPerSecond: 0.5 },
-                    path: 'culinary'
-                },
-                {
-                    id: 'restaurant',
-                    name: 'Restaurant',
-                    description: 'Customers pay for your delicious pasta!',
-                    icon: 'https://i.imgur.com/PastaCoin.png',
-                    cost: 500,
-                    effect: { pastaPerSecond: 2 },
-                    path: 'culinary'
-                },
-                {
-                    id: 'protection_racket',
-                    name: 'Protection Racket',
-                    description: 'Businesses pay you for "protection"!',
-                    icon: 'https://i.imgur.com/5XZJk7P.png',
-                    cost: 300,
-                    effect: { pastaPerSecond: 1.5 },
-                    path: 'mafia'
-                },
-                {
-                    id: 'underground_pasta',
-                    name: 'Underground Pasta',
-                    description: 'Illegal pasta operations are profitable!',
-                    icon: 'https://i.imgur.com/vVOh0Xk.png',
-                    cost: 800,
-                    effect: { pastaPerSecond: 4 },
-                    path: 'mafia'
-                },
-                {
-                    id: 'space_pasta',
-                    name: 'Space Pasta',
-                    description: 'Pasta that grows in zero gravity!',
-                    icon: 'https://i.imgur.com/KYjQbWZ.png',
-                    cost: 400,
-                    effect: { pastaPerSecond: 2.5 },
-                    path: 'cosmic'
-                },
-                {
-                    id: 'galactic_distribution',
-                    name: 'Galactic Distribution',
-                    description: 'Sell pasta across the galaxy!',
-                    icon: 'https://i.imgur.com/JQlE6rN.png',
-                    cost: 1200,
-                    effect: { pastaPerSecond: 6 },
-                    path: 'cosmic'
-                }
-            ],
-            special: [
-                {
-                    id: 'critical_cooking',
-                    name: 'Critical Cooking',
-                    description: 'Chance to make exceptional pasta!',
-                    icon: 'https://i.imgur.com/8Km9t0e.png',
-                    cost: 300,
-                    effect: { criticalChance: 0.1 },
-                    path: 'culinary'
-                },
-                {
-                    id: 'michelin_star',
-                    name: 'Michelin Star',
-                    description: 'Your pasta is world-renowned!',
-                    icon: 'https://i.imgur.com/PastaCoin.png',
-                    cost: 1000,
-                    effect: { pastaPerSecond: 3, clickPower: 3 },
-                    path: 'culinary'
-                },
-                {
-                    id: 'family_connections',
-                    name: 'Family Connections',
-                    description: 'The whole family is in on it!',
-                    icon: 'https://i.imgur.com/vVOh0Xk.png',
-                    cost: 400,
-                    effect: { pastaPerSecond: 2, criticalChance: 0.05 },
-                    path: 'mafia'
-                },
-                {
-                    id: 'pasta_godfather',
-                    name: 'Pasta Godfather',
-                    description: 'You control all pasta operations!',
-                    icon: 'https://i.imgur.com/QZzLQ9a.png',
-                    cost: 1500,
-                    effect: { pastaPerSecond: 5, clickPower: 5 },
-                    path: 'mafia'
-                },
-                {
-                    id: 'alien_pasta',
-                    name: 'Alien Pasta',
-                    description: 'Advanced extraterrestrial pasta technology!',
-                    icon: 'https://i.imgur.com/KYjQbWZ.png',
-                    cost: 700,
-                    effect: { pastaPerSecond: 4, criticalMultiplier: 0.5 },
-                    path: 'cosmic'
-                },
-                {
-                    id: 'pasta_singularity',
-                    name: 'Pasta Singularity',
-                    description: 'The ultimate pasta evolution!',
-                    icon: 'https://i.imgur.com/JQlE6rN.png',
-                    cost: 2000,
-                    effect: { pastaPerSecond: 8, clickPower: 8, criticalChance: 0.15 },
-                    path: 'cosmic'
+                { 
+                    name: "Гигантская лазанья", 
+                    desc: "Заваливает тебя слоями!", 
+                    health: 300, 
+                    reward: 500,
+                    image: "https://i.imgur.com/JQlE6rN.png"
                 }
             ]
         };
 
-        // Enemies Data
-        const enemies = [
-            {
-                id: 'uncle_mario',
-                name: 'Uncle Mario',
-                description: 'Throws pizza at you, slowing your progress!',
-                image: 'https://i.imgur.com/5XZJk7P.png',
-                health: 100,
-                reward: 100,
-                effect: { slowdown: 0.1 }
-            },
-            {
-                id: 'signor_vino',
-                name: 'Signor Vino',
-                description: 'Makes you dizzy with wine, reducing click power!',
-                image: 'https://i.imgur.com/QZzLQ9a.png',
-                health: 150,
-                reward: 200,
-                effect: { clickPowerReduction: 0.2 }
-            },
-            {
-                id: 'crazy_taxi',
-                name: 'Crazy Taxi Driver',
-                description: 'Drives through your pasta stand!',
-                image: 'https://i.imgur.com/vVOh0Xk.png',
-                health: 200,
-                reward: 350,
-                effect: { instantDamage: 50 }
-            },
-            {
-                id: 'chef_critic',
-                name: 'Chef Critic',
-                description: 'Harsh criticism lowers your morale!',
-                image: 'https://i.imgur.com/8Km9t0e.png',
-                health: 250,
-                reward: 500,
-                effect: { productionReduction: 0.3 }
-            },
-            {
-                id: 'giant_lasagna',
-                name: 'Giant Lasagna',
-                description: 'A massive lasagna blocks your way!',
-                image: 'https://i.imgur.com/JQlE6rN.png',
-                health: 500,
-                reward: 1000,
-                effect: { fullBlock: true }
-            }
-        ];
+        // Элементы интерфейса
+        const pastaEl = document.getElementById("pasta");
+        const ppsEl = document.getElementById("pps");
+        const levelEl = document.getElementById("level");
+        const clickBtn = document.getElementById("click-button");
+        const upgradesEl = document.getElementById("upgrades");
+        const enemyImage = document.getElementById("enemy-image");
+        const enemyName = document.getElementById("enemy-name");
+        const enemyDesc = document.getElementById("enemy-desc");
+        const enemyHealth = document.getElementById("enemy-health");
+        const enemyReward = document.getElementById("enemy-reward");
 
-        // Initialize the game
+        // Инициализация игры
         function init() {
             loadGame();
-            setupEventListeners();
             renderUpgrades();
-            spawnEnemy();
+            updateEnemy();
             updateUI();
-            startGameLoop();
             
-            // Start background music
-            backgroundMusic.volume = 0.3;
-            backgroundMusic.play().catch(e => console.log("Autoplay blocked"));
+            // Клик по пасте
+            clickBtn.addEventListener("click", handleClick);
+            
+            // Игровой цикл
+            setInterval(gameLoop, 1000);
         }
 
-        // Set up event listeners
-        function setupEventListeners() {
-            // Click button
-            clickButton.addEventListener('click', handleClick);
-            
-            // Tab switching
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    
-                    document.querySelectorAll('.upgrades-container').forEach(container => {
-                        container.style.display = 'none';
-                    });
-                    
-                    document.getElementById(`${tab.dataset.tab}-upgrades`).style.display = 'grid';
-                });
-            });
-            
-            // Path selection
-            document.querySelectorAll('.path').forEach(path => {
-                path.addEventListener('click', () => {
-                    if (game.activePath === path.dataset.path) {
-                        game.activePath = null;
-                        path.classList.remove('active');
-                    } else {
-                        game.activePath = path.dataset.path;
-                        document.querySelectorAll('.path').forEach(p => p.classList.remove('active'));
-                        path.classList.add('active');
-                    }
-                    renderUpgrades();
-                });
-            });
-            
-            // Prestige button
-            prestigeButton.addEventListener('click', prestige);
-        }
-
-        // Handle click event
+        // Обработка клика
         function handleClick() {
-            const now = Date.now();
-            const timeSinceLastClick = now - game.lastClickTime;
-            
-            // Check for click combo (clicks within 300ms of each other)
-            if (timeSinceLastClick < 300) {
-                game.clickCombo++;
-                if (game.clickCombo > game.maxClickCombo) {
-                    game.maxClickCombo = game.clickCombo;
-                }
-            } else {
-                game.clickCombo = 1;
-            }
-            
-            game.lastClickTime = now;
-            
-            // Calculate damage
             let damage = game.clickPower;
             
-            // Apply combo bonus
-            if (game.clickCombo >= 5) {
-                damage *= 1 + (game.clickCombo * 0.05);
+            // Критический удар
+            if (Math.random() < game.critChance / 100) {
+                damage *= 2;
+                showCritEffect();
             }
             
-            // Check for critical hit
-            let isCritical = false;
-            if (Math.random() < game.criticalChance) {
-                damage *= game.criticalMultiplier;
-                isCritical = true;
-                showCriticalHit();
-                criticalSound.currentTime = 0;
-                criticalSound.play();
-            }
-            
-            // Play click sound
-            clickSound.currentTime = 0;
-            clickSound.play();
-            
-            // Add pasta
             game.pasta += damage;
-            
-            // Show click effect
-            showClickEffect();
-            
-            // Create particles
-            createParticles(isCritical);
-            
-            // Damage enemy
-            if (game.currentEnemy) {
-                game.enemyHealth -= damage;
-                enemyHitSound.currentTime = 0;
-                enemyHitSound.play();
-                
-                // Check if enemy is defeated
-                if (game.enemyHealth <= 0) {
-                    defeatEnemy();
-                }
-            }
-            
-            // Add experience
-            addExperience(damage);
-            
-            // Update UI
+            damageEnemy(damage);
+            createParticles();
             updateUI();
             saveGame();
         }
 
-        // Show click effect
-        function showClickEffect() {
-            clickEffect.style.opacity = '1';
-            clickEffect.style.transform = 'scale(1.2)';
-            clickEffect.style.transition = 'all 0.2s';
+        // Урон врагу
+        function damageEnemy(damage) {
+            game.enemy.health -= damage;
             
-            setTimeout(() => {
-                clickEffect.style.opacity = '0';
-                clickEffect.style.transform = 'scale(1)';
-            }, 200);
-        }
-
-        // Create particles
-        function createParticles(isCritical) {
-            const particleCount = isCritical ? 20 : 10;
-            const colors = isCritical ? ['#FFD700', '#FF4500', '#FFFFFF'] : ['#F1FAEE', '#A8DADC', '#457B9D'];
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // Random position around the click button
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 50 + Math.random() * 50;
-                const x = clickButton.offsetLeft + 100 + Math.cos(angle) * distance;
-                const y = clickButton.offsetTop + 100 + Math.sin(angle) * distance;
-                
-                particle.style.left = `${x}px`;
-                particle.style.top = `${y}px`;
-                
-                // Random size
-                const size = isCritical ? 
-                    (10 + Math.random() * 10) : 
-                    (5 + Math.random() * 10);
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Random color
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.backgroundColor = color;
-                
-                // Random shape (circle or square)
-                if (Math.random() > 0.5) {
-                    particle.style.borderRadius = '50%';
-                }
-                
-                // Random rotation
-                particle.style.transform = `rotate(${Math.random() * 360}deg)`;
-                
-                document.body.appendChild(particle);
-                
-                // Animate particle
-                const duration = 1000 + Math.random() * 1000;
-                const startTime = Date.now();
-                
-                function animateParticle() {
-                    const elapsed = Date.now() - startTime;
-                    const progress = elapsed / duration;
-                    
-                    if (progress >= 1) {
-                        particle.remove();
-                        return;
-                    }
-                    
-                    // Move particle
-                    const moveDistance = 100 + progress * 200;
-                    particle.style.left = `${x + Math.cos(angle) * moveDistance}px`;
-                    particle.style.top = `${y + Math.sin(angle) * moveDistance}px`;
-                    
-                    // Fade out
-                    particle.style.opacity = 1 - progress;
-                    
-                    // Rotate
-                    particle.style.transform = `rotate(${progress * 360}deg)`;
-                    
-                    requestAnimationFrame(animateParticle);
-                }
-                
-                requestAnimationFrame(animateParticle);
-            }
-        }
-
-        // Show critical hit
-        function showCriticalHit() {
-            const critText = document.createElement('div');
-            critText.className = 'critical-hit';
-            critText.textContent = 'CRITICAL!';
-            
-            // Position near click button
-            critText.style.left = `${clickButton.offsetLeft + 50}px`;
-            critText.style.top = `${clickButton.offsetTop}px`;
-            
-            document.body.appendChild(critText);
-            
-            // Remove after animation
-            setTimeout(() => {
-                critText.remove();
-            }, 1000);
-        }
-
-        // Add experience
-        function addExperience(amount) {
-            game.experience += amount;
-            
-            // Check for level up
-            if (game.experience >= game.experienceToNextLevel) {
-                levelUp();
-            }
-        }
-
-        // Level up
-        function levelUp() {
-            game.level++;
-            game.experience -= game.experienceToNextLevel;
-            game.experienceToNextLevel = Math.floor(game.experienceToNextLevel * 1.5);
-            
-            // Show level up effect
-            levelCount.style.transform = 'scale(1.5)';
-            setTimeout(() => {
-                levelCount.style.transform = 'scale(1)';
-            }, 500);
-            
-            // Check for prestige availability
-            if (game.level >= 50 && prestigeButton.disabled) {
-                prestigeButton.disabled = false;
-                prestigeButton.textContent = 'Prestige Now!';
+            if (game.enemy.health <= 0) {
+                game.pasta += game.enemy.reward;
+                spawnNewEnemy();
             }
             
-            // Spawn new enemy every 5 levels
-            if (game.level % 5 === 0) {
-                spawnEnemy();
-            }
-            
-            // Save game
-            saveGame();
+            updateEnemy();
         }
 
-        // Spawn enemy
-        function spawnEnemy() {
-            // Choose random enemy
-            const enemy = enemies[Math.floor(Math.random() * enemies.length)];
-            game.currentEnemy = enemy;
-            game.enemyHealth = enemy.health;
-            game.maxEnemyHealth = enemy.health;
-            game.enemyReward = enemy.reward;
+        // Создать нового врага
+        function spawnNewEnemy() {
+            game.enemy = {...game.enemies[Math.floor(Math.random() * game.enemies.length)]};
+            game.enemy.maxHealth = game.enemy.health;
+            game.enemy.health = game.enemy.maxHealth;
             
-            // Update UI
-            enemyImage.style.backgroundImage = `url('${enemy.image}')`;
-            enemyName.textContent = enemy.name;
-            enemyDesc.textContent = enemy.description;
-            enemyRewards.textContent = `Reward: ${enemy.reward} Pasta Coins`;
-            updateEnemyHealth();
-            
-            // Enemy spawn animation
-            enemyImage.style.transform = 'scale(0)';
-            enemyImage.style.opacity = '0';
-            
+            // Анимация появления врага
+            enemyImage.style.transform = "scale(0)";
+            enemyImage.style.opacity = "0";
             setTimeout(() => {
-                enemyImage.style.transition = 'all 0.5s';
-                enemyImage.style.transform = 'scale(1)';
-                enemyImage.style.opacity = '1';
+                enemyImage.style.transition = "all 0.5s";
+                enemyImage.style.transform = "scale(1)";
+                enemyImage.style.opacity = "1";
             }, 10);
         }
 
-        // Update enemy health display
-        function updateEnemyHealth() {
-            const healthPercent = (game.enemyHealth / game.maxEnemyHealth) * 100;
-            enemyHealthBar.style.width = `${healthPercent}%`;
+        // Создать частицы
+        function createParticles() {
+            const particleImages = [
+                "https://i.imgur.com/PastaCoin.png",
+                "https://i.imgur.com/5XZJk7P.png",
+                "https://i.imgur.com/3QJjQ9a.png"
+            ];
             
-            // Change color based on health
-            if (healthPercent > 60) {
-                enemyHealthBar.style.backgroundColor = '#06D6A0'; // Green
-            } else if (healthPercent > 30) {
-                enemyHealthBar.style.backgroundColor = '#FFD166'; // Yellow
-            } else {
-                enemyHealthBar.style.backgroundColor = '#E63946'; // Red
-            }
-        }
-
-        // Defeat enemy
-        function defeatEnemy() {
-            // Add reward
-            game.pasta += game.enemyReward;
-            
-            // Play victory sound
-            enemyDefeatSound.currentTime = 0;
-            enemyDefeatSound.play();
-            
-            // Show victory effect
-            enemyImage.style.transform = 'scale(1.2)';
-            enemyImage.style.opacity = '0.5';
-            enemyImage.style.transition = 'all 0.5s';
-            
-            // Create explosion particles
-            for (let i = 0; i < 30; i++) {
-                createExplosionParticle();
-            }
-            
-            // Spawn new enemy after delay
-            setTimeout(() => {
-                spawnEnemy();
-            }, 1000);
-        }
-
-        // Create explosion particle
-        function createExplosionParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // Start position at enemy
-            const startX = enemyImage.offsetLeft + 75;
-            const startY = enemyImage.offsetTop + 75;
-            
-            particle.style.left = `${startX}px`;
-            particle.style.top = `${startY}px`;
-            
-            // Random size and color
-            const size = 5 + Math.random() * 10;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            
-            const colors = ['#E63946', '#FFD166', '#FFFFFF', '#06D6A0'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            particle.style.backgroundColor = color;
-            
-            document.body.appendChild(particle);
-            
-            // Animate particle
-            const angle = Math.random() * Math.PI * 2;
-            const speed = 2 + Math.random() * 3;
-            const lifetime = 500 + Math.random() * 500;
-            const startTime = Date.now();
-            
-            function animate() {
-                const elapsed = Date.now() - startTime;
-                const progress = elapsed / lifetime;
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement("div");
+                particle.className = "particle";
+                particle.style.backgroundImage = `url('${particleImages[Math.floor(Math.random() * particleImages.length)]}')`;
+                particle.style.left = `${Math.random() * 100 + 50}px`;
+                particle.style.top = `${Math.random() * 100 + 50}px`;
+                document.querySelector(".click-area").appendChild(particle);
                 
-                if (progress >= 1) {
+                setTimeout(() => {
                     particle.remove();
-                    return;
-                }
-                
-                const distance = speed * elapsed / 10;
-                particle.style.left = `${startX + Math.cos(angle) * distance}px`;
-                particle.style.top = `${startY + Math.sin(angle) * distance}px`;
-                particle.style.opacity = 1 - progress;
-                
-                requestAnimationFrame(animate);
+                }, 1000);
             }
-            
-            requestAnimationFrame(animate);
         }
 
-        // Render upgrades
+        // Эффект крита
+        function showCritEffect() {
+            const crit = document.createElement("div");
+            crit.className = "critical";
+            crit.textContent = "КРИТ! x2";
+            crit.style.left = `${Math.random() * 100 + 50}px`;
+            crit.style.top = `${Math.random() * 100 + 50}px`;
+            document.querySelector(".click-area").appendChild(crit);
+            
+            setTimeout(() => {
+                crit.remove();
+            }, 500);
+        }
+
+        // Отрисовка улучшений
         function renderUpgrades() {
-            // Clear containers
-            clickUpgradesContainer.innerHTML = '';
-            productionUpgradesContainer.innerHTML = '';
-            specialUpgradesContainer.innerHTML = '';
+            upgradesEl.innerHTML = "";
             
-            // Render click upgrades
-            upgrades.click.forEach(upgrade => {
-                if (!game.activePath || upgrade.path === game.activePath) {
-                    renderUpgrade(upgrade, clickUpgradesContainer);
+            game.upgrades.forEach(upgrade => {
+                const el = document.createElement("div");
+                el.className = `upgrade ${upgrade.unlocked ? "unlocked" : "available"}`;
+                el.innerHTML = `
+                    <div class="upgrade-icon" style="background-image: url('${upgrade.icon}')"></div>
+                    <h3>${upgrade.name}</h3>
+                    <p>${upgrade.desc}</p>
+                    <p>Цена: ${upgrade.cost} пасты</p>
+                `;
+                
+                if (!upgrade.unlocked) {
+                    el.addEventListener("click", () => buyUpgrade(upgrade));
                 }
-            });
-            
-            // Render production upgrades
-            upgrades.production.forEach(upgrade => {
-                if (!game.activePath || upgrade.path === game.activePath) {
-                    renderUpgrade(upgrade, productionUpgradesContainer);
-                }
-            });
-            
-            // Render special upgrades
-            upgrades.special.forEach(upgrade => {
-                if (!game.activePath || upgrade.path === game.activePath) {
-                    renderUpgrade(upgrade, specialUpgradesContainer);
-                }
+                
+                upgradesEl.appendChild(el);
             });
         }
 
-        // Render single upgrade
-        function renderUpgrade(upgrade, container) {
-            const upgradeElement = document.createElement('div');
-            upgradeElement.className = 'upgrade';
-            
-            // Check if upgrade is unlocked
-            if (game.unlockedUpgrades.includes(upgrade.id)) {
-                upgradeElement.classList.add('unlocked');
-            } 
-            // Check if upgrade is available (enough pasta)
-            else if (game.pasta >= upgrade.cost) {
-                upgradeElement.classList.add('available');
-                upgradeElement.addEventListener('click', () => buyUpgrade(upgrade));
-            } 
-            // Otherwise it's locked
-            else {
-                upgradeElement.classList.add('locked');
-            }
-            
-            // Set upgrade icon
-            upgradeElement.innerHTML = `
-                <div class="upgrade-icon" style="background-image: url('${upgrade.icon}')"></div>
-                <div class="upgrade-name">${upgrade.name}</div>
-                <div class="upgrade-desc">${upgrade.description}</div>
-                <div class="upgrade-cost">Cost: ${upgrade.cost} Pasta</div>
-            `;
-            
-            container.appendChild(upgradeElement);
-        }
-
-        // Buy upgrade
+        // Покупка улучшения
         function buyUpgrade(upgrade) {
-            // Check if player can afford it
-            if (game.pasta < upgrade.cost || game.unlockedUpgrades.includes(upgrade.id)) {
-                return;
-            }
-            
-            // Deduct cost
-            game.pasta -= upgrade.cost;
-            
-            // Add to unlocked upgrades
-            game.unlockedUpgrades.push(upgrade.id);
-            
-            // Apply effects
-            if (upgrade.effect.clickPower) {
-                game.clickPower += upgrade.effect.clickPower;
-            }
-            if (upgrade.effect.pastaPerSecond) {
-                game.pastaPerSecond += upgrade.effect.pastaPerSecond;
-            }
-            if (upgrade.effect.criticalChance) {
-                game.criticalChance += upgrade.effect.criticalChance;
-            }
-            if (upgrade.effect.criticalMultiplier) {
-                game.criticalMultiplier += upgrade.effect.criticalMultiplier;
-            }
-            
-            // Update path progress
-            game.pathProgress[upgrade.path]++;
-            
-            // Play sound
-            upgradeSound.currentTime = 0;
-            upgradeSound.play();
-            
-            // Update UI
-            updateUI();
-            renderUpgrades();
-            saveGame();
-        }
-
-        // Prestige
-        function prestige() {
-            // Check if player can prestige
-            if (game.level < 50) {
-                return;
-            }
-            
-            // Calculate prestige bonus (1% per level over 50)
-            const bonus = (game.level - 50) * 0.01;
-            
-            // Update prestige level
-            game.prestigeLevel++;
-            
-            // Reset game state but keep some bonuses
-            const keepUpgrades = game.unlockedUpgrades.filter(id => 
-                id === 'pasta_singularity' || 
-                id === 'pasta_godfather' || 
-                id === 'michelin_star'
-            );
-            
-            game.pasta = 0;
-            game.pastaPerSecond = 0;
-            game.clickPower = 1 + bonus;
-            game.level = 1;
-            game.experience = 0;
-            game.experienceToNextLevel = 100;
-            game.criticalChance = 0;
-            game.autoClickers = 0;
-            game.unlockedUpgrades = keepUpgrades;
-            game.currentEnemy = null;
-            game.enemyHealth = 0;
-            
-            // Reset path progress but keep some progress based on prestige
-            for (const path in game.pathProgress) {
-                game.pathProgress[path] = Math.floor(game.pathProgress[path] * 0.3);
-            }
-            
-            // Play sound
-            prestigeSound.currentTime = 0;
-            prestigeSound.play();
-            
-            // Show prestige effect
-            showPrestigeEffect();
-            
-            // Update UI
-            updateUI();
-            renderUpgrades();
-            spawnEnemy();
-            saveGame();
-        }
-
-        // Show prestige effect
-        function showPrestigeEffect() {
-            // Create golden particles
-            for (let i = 0; i < 100; i++) {
-                createGoldenParticle();
-            }
-            
-            // Show prestige message
-            const message = document.createElement('div');
-            message.className = 'floating-text';
-            message.textContent = `PRESTIGE ${game.prestigeLevel}!`;
-            message.style.left = `${window.innerWidth / 2 - 100}px`;
-            message.style.top = `${window.innerHeight / 2 - 50}px`;
-            message.style.fontSize = '3rem';
-            message.style.color = '#FFD700';
-            
-            document.body.appendChild(message);
-            
-            // Remove after animation
-            setTimeout(() => {
-                message.remove();
-            }, 1000);
-        }
-
-        // Create golden particle
-        function createGoldenParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // Start position at center
-            const startX = window.innerWidth / 2;
-            const startY = window.innerHeight / 2;
-            
-            particle.style.left = `${startX}px`;
-            particle.style.top = `${startY}px`;
-            
-            // Golden color
-            particle.style.backgroundColor = '#FFD700';
-            particle.style.boxShadow = '0 0 10px #FFD700';
-            
-            // Random size
-            const size = 5 + Math.random() * 10;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            
-            document.body.appendChild(particle);
-            
-            // Animate particle
-            const angle = Math.random() * Math.PI * 2;
-            const speed = 2 + Math.random() * 5;
-            const lifetime = 1000 + Math.random() * 1000;
-            const startTime = Date.now();
-            
-            function animate() {
-                const elapsed = Date.now() - startTime;
-                const progress = elapsed / lifetime;
+            if (game.pasta >= upgrade.cost && !upgrade.unlocked) {
+                game.pasta -= upgrade.cost;
+                upgrade.unlocked = true;
                 
-                if (progress >= 1) {
-                    particle.remove();
-                    return;
-                }
+                if (upgrade.effect.click) game.clickPower += upgrade.effect.click;
+                if (upgrade.effect.pps) game.pps += upgrade.effect.pps;
+                if (upgrade.effect.crit) game.critChance += upgrade.effect.crit;
                 
-                const distance = speed * elapsed / 10;
-                particle.style.left = `${startX + Math.cos(angle) * distance}px`;
-                particle.style.top = `${startY + Math.sin(angle) * distance}px`;
-                particle.style.opacity = 1 - progress;
-                
-                requestAnimationFrame(animate);
-            }
-            
-            requestAnimationFrame(animate);
-        }
-
-        // Update UI
-        function updateUI() {
-            // Update pasta count
-            pastaCount.textContent = Math.floor(game.pasta).toLocaleString();
-            
-            // Update PPS
-            ppsCount.textContent = game.pastaPerSecond.toFixed(1);
-            
-            // Update level
-            levelCount.textContent = game.level;
-            
-            // Update click multiplier
-            clickMultiplier.textContent = `+${game.clickPower.toFixed(1)} per click`;
-            if (game.criticalChance > 0) {
-                clickMultiplier.textContent += ` (${(game.criticalChance * 100).toFixed(1)}% crit x${game.criticalMultiplier.toFixed(1)})`;
-            }
-            
-            // Update enemy health
-            if (game.currentEnemy) {
-                updateEnemyHealth();
-            }
-            
-            // Update prestige button
-            if (game.level >= 50) {
-                const bonus = (game.level - 50) * 1;
-                prestigeButton.disabled = false;
-                prestigeButton.textContent = `Prestige Now! (+${bonus}% bonus)`;
-                prestigeRewards.textContent = `Next Prestige: +${bonus}% bonus`;
-            } else {
-                prestigeButton.disabled = true;
-                prestigeButton.textContent = `Prestige (Unlocks at level 50)`;
-                prestigeRewards.textContent = `Next Prestige: +0% bonus`;
-            }
-            
-            // Update path progress
-            culinaryProgress.style.width = `${(game.pathProgress.culinary / 10) * 100}%`;
-            culinaryUnlocks.textContent = `${game.pathProgress.culinary}/10 upgrades`;
-            
-            mafiaProgress.style.width = `${(game.pathProgress.mafia / 10) * 100}%`;
-            mafiaUnlocks.textContent = `${game.pathProgress.mafia}/10 upgrades`;
-            
-            cosmicProgress.style.width = `${(game.pathProgress.cosmic / 10) * 100}%`;
-            cosmicUnlocks.textContent = `${game.pathProgress.cosmic}/10 upgrades`;
-        }
-
-        // Game loop
-        function startGameLoop() {
-            setInterval(() => {
-                // Add passive pasta
-                game.pasta += game.pastaPerSecond / 10;
-                
-                // Update UI every frame for smooth animations
+                renderUpgrades();
                 updateUI();
-                
-                // Save game periodically
-                if (Date.now() % 5000 < 50) {
-                    saveGame();
-                }
-            }, 100);
-        }
-
-        // Save game
-        function saveGame() {
-            const saveData = {
-                pasta: game.pasta,
-                pastaPerSecond: game.pastaPerSecond,
-                clickPower: game.clickPower,
-                level: game.level,
-                experience: game.experience,
-                experienceToNextLevel: game.experienceToNextLevel,
-                criticalChance: game.criticalChance,
-                criticalMultiplier: game.criticalMultiplier,
-                autoClickers: game.autoClickers,
-                prestigeLevel: game.prestigeLevel,
-                activePath: game.activePath,
-                pathProgress: game.pathProgress,
-                unlockedUpgrades: game.unlockedUpgrades,
-                currentEnemy: game.currentEnemy?.id || null,
-                enemyHealth: game.enemyHealth,
-                maxEnemyHealth: game.maxEnemyHealth,
-                enemyReward: game.enemyReward,
-                lastClickTime: game.lastClickTime,
-                clickCombo: game.clickCombo,
-                maxClickCombo: game.maxClickCombo
-            };
-            
-            localStorage.setItem('italianBrainrotClickerSave', JSON.stringify(saveData));
-        }
-
-        // Load game
-        function loadGame() {
-            const saveData = localStorage.getItem('italianBrainrotClickerSave');
-            if (saveData) {
-                const parsed = JSON.parse(saveData);
-                
-                // Restore basic stats
-                game.pasta = parsed.pasta || 0;
-                game.pastaPerSecond = parsed.pastaPerSecond || 0;
-                game.clickPower = parsed.clickPower || 1;
-                game.level = parsed.level || 1;
-                game.experience = parsed.experience || 0;
-                game.experienceToNextLevel = parsed.experienceToNextLevel || 100;
-                game.criticalChance = parsed.criticalChance || 0;
-                game.criticalMultiplier = parsed.criticalMultiplier || 2;
-                game.autoClickers = parsed.autoClickers || 0;
-                game.prestigeLevel = parsed.prestigeLevel || 0;
-                game.activePath = parsed.activePath || null;
-                game.pathProgress = parsed.pathProgress || {
-                    culinary: 0,
-                    mafia: 0,
-                    cosmic: 0
-                };
-                game.unlockedUpgrades = parsed.unlockedUpgrades || [];
-                game.lastClickTime = parsed.lastClickTime || 0;
-                game.clickCombo = parsed.clickCombo || 0;
-                game.maxClickCombo = parsed.maxClickCombo || 0;
-                
-                // Restore current enemy
-                if (parsed.currentEnemy) {
-                    game.currentEnemy = enemies.find(e => e.id === parsed.currentEnemy);
-                    game.enemyHealth = parsed.enemyHealth || 0;
-                    game.maxEnemyHealth = parsed.maxEnemyHealth || 100;
-                    game.enemyReward = parsed.enemyReward || 100;
-                }
-                
-                // Activate selected path
-                if (game.activePath) {
-                    document.querySelector(`.path[data-path="${game.activePath}"]`).classList.add('active');
-                }
+                saveGame();
             }
         }
 
-        // Initialize the game when page loads
-        window.addEventListener('load', init);
+        // Обновление интерфейса
+        function updateUI() {
+            pastaEl.textContent = Math.floor(game.pasta);
+            ppsEl.textContent = game.pps.toFixed(1);
+            levelEl.textContent = game.level;
+        }
+
+        // Обновление врага
+        function updateEnemy() {
+            enemyName.textContent = game.enemy.name;
+            enemyDesc.textContent = game.enemy.desc;
+            enemyReward.textContent = game.enemy.reward;
+            enemyHealth.style.width = `${(game.enemy.health / game.enemy.maxHealth) * 100}%`;
+            enemyImage.style.backgroundImage = `url('${game.enemy.image}')`;
+            
+            // Изменение цвета здоровья в зависимости от %
+            const healthPercent = (game.enemy.health / game.enemy.maxHealth) * 100;
+            if (healthPercent > 60) {
+                enemyHealth.style.backgroundColor = "#06D6A0";
+            } else if (healthPercent > 30) {
+                enemyHealth.style.backgroundColor = "#FFD166";
+            } else {
+                enemyHealth.style.backgroundColor = "#E63946";
+            }
+        }
+
+        // Игровой цикл
+        function gameLoop() {
+            game.pasta += game.pps / 10;
+            updateUI();
+            saveGame();
+        }
+
+        // Сохранение игры
+        function saveGame() {
+            localStorage.setItem("pastaClickerSave", JSON.stringify(game));
+        }
+
+        // Загрузка игры
+        function loadGame() {
+            const save = localStorage.getItem("pastaClickerSave");
+            if (save) Object.assign(game, JSON.parse(save));
+        }
+
+        // Запуск игры
+        window.addEventListener("load", init);
     </script>
 </body>
 </html>
